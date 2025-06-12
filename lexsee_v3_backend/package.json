@@ -20,5 +20,8 @@
   },
   "dependencies": {
     "aws-amplify": "^6.15.0"
+  },
+  "overrides": {
+    "minimatch": "10.0.1"
   }
 }
