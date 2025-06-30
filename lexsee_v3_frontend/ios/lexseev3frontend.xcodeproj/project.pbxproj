@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		12B7E5368B9CB235A5A39B94 /* libPods-lexseev3frontend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E3992E8DDFEB086ADB696097 /* libPods-lexseev3frontend.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		406CC56D2EF5F9ECA48FAF94 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD2ED354A9D630C8826F63A /* ExpoModulesProvider.swift */; };
-		B4286CFC723D0E282C11527D /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6AAC671491898CD97AC227E6 /* PrivacyInfo.xcprivacy */; };
+		75DD47CD12FC13AA06BB04D6 /* libPods-lexseev3frontend.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B69C73E2BFC3C1D89E1766A /* libPods-lexseev3frontend.a */; };
+		8FA8E5CC08F482718C207BAB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 39743709F1F3DF5C28C1F842 /* PrivacyInfo.xcprivacy */; };
+		9A1934011DC1CBDF4036DA98 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE023866A43EA9FC986F927 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0AA8A3F2EA46CB8749E91D17 /* Pods-lexseev3frontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lexseev3frontend.debug.xcconfig"; path = "Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* lexseev3frontend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lexseev3frontend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = lexseev3frontend/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = lexseev3frontend/Info.plist; sourceTree = "<group>"; };
-		2F0601CDA755391F04453971 /* Pods-lexseev3frontend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lexseev3frontend.release.xcconfig"; path = "Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend.release.xcconfig"; sourceTree = "<group>"; };
-		6AAC671491898CD97AC227E6 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = lexseev3frontend/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		25C90A6D9DB2DEEFE270D48F /* Pods-lexseev3frontend.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lexseev3frontend.release.xcconfig"; path = "Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend.release.xcconfig"; sourceTree = "<group>"; };
+		272FB8B40650EB95C53A374A /* Pods-lexseev3frontend.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-lexseev3frontend.debug.xcconfig"; path = "Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend.debug.xcconfig"; sourceTree = "<group>"; };
+		39743709F1F3DF5C28C1F842 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = lexseev3frontend/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		8B69C73E2BFC3C1D89E1766A /* libPods-lexseev3frontend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-lexseev3frontend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8CE023866A43EA9FC986F927 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-lexseev3frontend/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = lexseev3frontend/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		E3992E8DDFEB086ADB696097 /* libPods-lexseev3frontend.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-lexseev3frontend.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = lexseev3frontend/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* lexseev3frontend-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "lexseev3frontend-Bridging-Header.h"; path = "lexseev3frontend/lexseev3frontend-Bridging-Header.h"; sourceTree = "<group>"; };
-		FDD2ED354A9D630C8826F63A /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-lexseev3frontend/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12B7E5368B9CB235A5A39B94 /* libPods-lexseev3frontend.a in Frameworks */,
+				75DD47CD12FC13AA06BB04D6 /* libPods-lexseev3frontend.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +53,15 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				6AAC671491898CD97AC227E6 /* PrivacyInfo.xcprivacy */,
+				39743709F1F3DF5C28C1F842 /* PrivacyInfo.xcprivacy */,
+			);
+			name = lexseev3frontend;
+			sourceTree = "<group>";
+		};
+		2A09A084176428166F6A8F91 /* lexseev3frontend */ = {
+			isa = PBXGroup;
+			children = (
+				8CE023866A43EA9FC986F927 /* ExpoModulesProvider.swift */,
 			);
 			name = lexseev3frontend;
 			sourceTree = "<group>";
@@ -62,27 +70,27 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				E3992E8DDFEB086ADB696097 /* libPods-lexseev3frontend.a */,
+				8B69C73E2BFC3C1D89E1766A /* libPods-lexseev3frontend.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3368E1A3981CB6CF4163BB26 /* lexseev3frontend */ = {
+		7686DAE9CEA4660A494E09CE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FDD2ED354A9D630C8826F63A /* ExpoModulesProvider.swift */,
-			);
-			name = lexseev3frontend;
-			sourceTree = "<group>";
-		};
-		6261C1E820D58A4F7A2603F9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0AA8A3F2EA46CB8749E91D17 /* Pods-lexseev3frontend.debug.xcconfig */,
-				2F0601CDA755391F04453971 /* Pods-lexseev3frontend.release.xcconfig */,
+				272FB8B40650EB95C53A374A /* Pods-lexseev3frontend.debug.xcconfig */,
+				25C90A6D9DB2DEEFE270D48F /* Pods-lexseev3frontend.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		7A4644B4B295D93524AAB05C /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				2A09A084176428166F6A8F91 /* lexseev3frontend */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -99,8 +107,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				6261C1E820D58A4F7A2603F9 /* Pods */,
-				FAE3542314CA483031299EB6 /* ExpoModulesProviders */,
+				7686DAE9CEA4660A494E09CE /* Pods */,
+				7A4644B4B295D93524AAB05C /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -124,14 +132,6 @@
 			path = lexseev3frontend/Supporting;
 			sourceTree = "<group>";
 		};
-		FAE3542314CA483031299EB6 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				3368E1A3981CB6CF4163BB26 /* lexseev3frontend */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -140,13 +140,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "lexseev3frontend" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				E3396B8944BB93F18AD5D0CF /* [Expo] Configure project */,
+				C45A769966CE76F9287A3208 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				91DF49A46E8AC7AAE8E58A7D /* [CP] Embed Pods Frameworks */,
+				5C74EDC3D2CD6E2BE3147FF6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				B4286CFC723D0E282C11527D /* PrivacyInfo.xcprivacy in Resources */,
+				8FA8E5CC08F482718C207BAB /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,41 +240,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/RCT-Folly_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/RNCAsyncStorage/RNCAsyncStorage_resources.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
-				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCT-Folly_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNCAsyncStorage_resources.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		91DF49A46E8AC7AAE8E58A7D /* [CP] Embed Pods Frameworks */ = {
+		5C74EDC3D2CD6E2BE3147FF6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -292,7 +258,43 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E3396B8944BB93F18AD5D0CF /* [Expo] Configure project */ = {
+		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoSystemUI/ExpoSystemUI_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/RCT-Folly_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG/RNSVGFilters.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoSystemUI_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCT-Folly_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNSVGFilters.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-lexseev3frontend/Pods-lexseev3frontend-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C45A769966CE76F9287A3208 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -319,7 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				406CC56D2EF5F9ECA48FAF94 /* ExpoModulesProvider.swift in Sources */,
+				9A1934011DC1CBDF4036DA98 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +330,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0AA8A3F2EA46CB8749E91D17 /* Pods-lexseev3frontend.debug.xcconfig */;
+			baseConfigurationReference = 272FB8B40650EB95C53A374A /* Pods-lexseev3frontend.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -352,7 +354,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.leoyang-2001.lexsee-v3-frontend";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anonymous.lexsee-v3-frontend";
 				PRODUCT_NAME = lexseev3frontend;
 				SWIFT_OBJC_BRIDGING_HEADER = "lexseev3frontend/lexseev3frontend-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -364,7 +366,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F0601CDA755391F04453971 /* Pods-lexseev3frontend.release.xcconfig */;
+			baseConfigurationReference = 25C90A6D9DB2DEEFE270D48F /* Pods-lexseev3frontend.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -383,7 +385,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.leoyang-2001.lexsee-v3-frontend";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anonymous.lexsee-v3-frontend";
 				PRODUCT_NAME = lexseev3frontend;
 				SWIFT_OBJC_BRIDGING_HEADER = "lexseev3frontend/lexseev3frontend-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
