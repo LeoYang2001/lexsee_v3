@@ -5,11 +5,11 @@ import { Link } from "expo-router";
 const index = () => {
   return (
     <View>
-      <Link href="/(main)/home">
-        <Text>go to auth</Text>
+      <Link href="/(main)">
+        <Text className="text-foreground">go to main</Text>
       </Link>
       <Link href="/(auth)/sign_in">
-        <Text>go to main</Text>
+        <Text className="text-foreground">go to auth</Text>
       </Link>
     </View>
   );
