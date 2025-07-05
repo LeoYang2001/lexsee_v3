@@ -4,10 +4,11 @@ import { Link } from "expo-router";
 
 const index = () => {
   return (
-    <View>
-      <Link href="/(main)">
+    <View className=" p-12">
+      <Link href="/(home)">
         <Text className="text-foreground">go to main</Text>
       </Link>
+
       <Link href="/(auth)/sign_in">
         <Text className="text-foreground">go to auth</Text>
       </Link>
