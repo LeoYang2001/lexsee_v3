@@ -6,9 +6,9 @@ import {
   Theme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Stack } from "expo-router";
+import { Redirect, Slot, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Appearance, Platform, View } from "react-native";
+import { ActivityIndicator, Appearance, Platform, View } from "react-native";
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { PortalHost } from "@rn-primitives/portal";
@@ -21,6 +21,9 @@ import { store } from "~/redux/store";
 import { Authenticator } from "@aws-amplify/ui-react-native";
 import { Amplify } from "aws-amplify";
 import outputs from "../../lexsee_v3_backend/amplify_outputs.json";
+import useAuthListener from "~/hooks/useAuthListener";
+import { useSelector } from "react-redux";
+import { RootState } from "~/redux/rootReducer";
 
 Amplify.configure(outputs);
 
@@ -53,6 +56,7 @@ SplashScreen.setOptions({
 });
 export default function RootLayout() {
   const [appIsReady, setAppIsReady] = useState(false);
+  const { isDarkColorScheme } = useColorScheme();
 
   useEffect(() => {
     async function prepare() {
@@ -74,11 +78,7 @@ export default function RootLayout() {
 
   const onLayoutRootView = useCallback(() => {
     if (appIsReady) {
-      // This tells the splash screen to hide immediately! If we call this after
-      // `setAppIsReady`, then we may see a blank screen while the app is
-      // loading its initial state and rendering its first pixels. So instead,
-      // we hide the splash screen once we know the root view has already
-      // performed layout.
+      //Splash Screen doesn't hide until screen renders
       SplashScreen.hide();
     }
   }, [appIsReady]);
@@ -88,35 +88,41 @@ export default function RootLayout() {
   }
 
   return (
-    <View className="flex-1" onLayout={onLayoutRootView}>
-      <RootLayoutNav />
-    </View>
-  );
-}
-
-function RootLayoutNav() {
-  usePlatformSpecificSetup();
-  const { isDarkColorScheme } = useColorScheme();
-
-  return (
     <Authenticator.Provider>
       <Provider store={store}>
         <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-          <Stack>
-            <Stack.Screen
-              name="index"
-              options={{
-                title: "Starter Base",
-                headerRight: () => <ThemeToggle />,
-              }}
-            />
-          </Stack>
-          <PortalHost />
+          <View className="flex-1 h-full w-full" onLayout={onLayoutRootView}>
+            <RootLayoutNav />
+            <PortalHost />
+          </View>
         </ThemeProvider>
       </Provider>
     </Authenticator.Provider>
   );
+}
+function RootLayoutNav() {
+  usePlatformSpecificSetup();
+  const { isDarkColorScheme } = useColorScheme();
+
+  const isAuthLoaded = useAuthListener();
+  const user = useSelector((state: RootState) => state.user);
+  const isSignedIn = !!user.email;
+
+  if (!isAuthLoaded) {
+    return (
+      <View className="flex-1 items-center justify-center bg-background">
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
+  // Redirect based on auth state
+  if (!isSignedIn) {
+    return <Redirect href="/(auth)/signIn" />;
+  }
+
+  // If logged in, redirect to main/home
+  return <Redirect href="/(home)" />;
 }
 
 const useIsomorphicLayoutEffect =
