@@ -1,15 +1,28 @@
-import '~/global.css';
+import "~/global.css";
 
-import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import * as React from 'react';
-import { Appearance, Platform, View } from 'react-native';
-import { NAV_THEME } from '~/lib/constants';
-import { useColorScheme } from '~/lib/useColorScheme';
-import { PortalHost } from '@rn-primitives/portal';
-import { ThemeToggle } from '~/components/ThemeToggle';
-import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
+import {
+  DarkTheme,
+  DefaultTheme,
+  Theme,
+  ThemeProvider,
+} from "@react-navigation/native";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import { Appearance, Platform, View } from "react-native";
+import { NAV_THEME } from "~/lib/constants";
+import { useColorScheme } from "~/lib/useColorScheme";
+import { PortalHost } from "@rn-primitives/portal";
+import { ThemeToggle } from "~/components/ThemeToggle";
+import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
+import * as SplashScreen from "expo-splash-screen";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { Provider } from "react-redux";
+import { store } from "~/redux/store";
+import { Authenticator } from "@aws-amplify/ui-react-native";
+import { Amplify } from "aws-amplify";
+import outputs from "../../lexsee_v3_backend/amplify_outputs.json";
+
+Amplify.configure(outputs);
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -23,7 +36,7 @@ const DARK_THEME: Theme = {
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router';
+} from "expo-router";
 
 const usePlatformSpecificSetup = Platform.select({
   web: useSetWebBackgroundClassName,
@@ -31,40 +44,96 @@ const usePlatformSpecificSetup = Platform.select({
   default: noop,
 });
 
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
+
+SplashScreen.setOptions({
+  duration: 1000,
+  fade: true,
+});
 export default function RootLayout() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Pre-load fonts, make any API calls you need to do here
+        // Artificially delay for two seconds to simulate a slow loading experience
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+        console.log("app ready");
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(() => {
+    if (appIsReady) {
+      // This tells the splash screen to hide immediately! If we call this after
+      // `setAppIsReady`, then we may see a blank screen while the app is
+      // loading its initial state and rendering its first pixels. So instead,
+      // we hide the splash screen once we know the root view has already
+      // performed layout.
+      SplashScreen.hide();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
+  return (
+    <View className="flex-1" onLayout={onLayoutRootView}>
+      <RootLayoutNav />
+    </View>
+  );
+}
+
+function RootLayoutNav() {
   usePlatformSpecificSetup();
   const { isDarkColorScheme } = useColorScheme();
 
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-      <Stack>
-        <Stack.Screen
-          name='index'
-          options={{
-            title: 'Starter Base',
-            headerRight: () => <ThemeToggle />,
-          }}
-        />
-      </Stack>
-      <PortalHost />
-    </ThemeProvider>
+    <Authenticator.Provider>
+      <Provider store={store}>
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+          <Stack>
+            <Stack.Screen
+              name="index"
+              options={{
+                title: "Starter Base",
+                headerRight: () => <ThemeToggle />,
+              }}
+            />
+          </Stack>
+          <PortalHost />
+        </ThemeProvider>
+      </Provider>
+    </Authenticator.Provider>
   );
 }
 
 const useIsomorphicLayoutEffect =
-  Platform.OS === 'web' && typeof window === 'undefined' ? React.useEffect : React.useLayoutEffect;
+  Platform.OS === "web" && typeof window === "undefined"
+    ? useEffect
+    : useLayoutEffect;
 
 function useSetWebBackgroundClassName() {
   useIsomorphicLayoutEffect(() => {
     // Adds the background color to the html element to prevent white background on overscroll.
-    document.documentElement.classList.add('bg-background');
+    document.documentElement.classList.add("bg-background");
   }, []);
 }
 
 function useSetAndroidNavigationBar() {
-  React.useLayoutEffect(() => {
-    setAndroidNavigationBar(Appearance.getColorScheme() ?? 'light');
+  useLayoutEffect(() => {
+    setAndroidNavigationBar(Appearance.getColorScheme() ?? "light");
   }, []);
 }
 

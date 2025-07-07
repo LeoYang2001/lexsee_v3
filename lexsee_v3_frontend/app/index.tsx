@@ -8,7 +8,7 @@ const index = () => {
       <Link href="/(main)">
         <Text className="text-foreground">go to main</Text>
       </Link>
-      <Link href="/(auth)/sign_in">
+      <Link href="/(auth)/signIn">
         <Text className="text-foreground">go to auth</Text>
       </Link>
     </View>
