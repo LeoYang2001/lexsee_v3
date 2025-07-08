@@ -137,7 +137,7 @@ const emailConfirm = () => {
             />
           </View>
           <View className="gap-1">
-            <Button onPress={handleConfirm} className="bg-midea">
+            <Button onPress={handleConfirm} className="bg-theme">
               <Text className="text-white font-semibold">Confirm</Text>
             </Button>
           </View>

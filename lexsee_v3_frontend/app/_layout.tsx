@@ -6,15 +6,19 @@ import {
   Theme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Redirect } from "expo-router"; // Stack will go into group layouts
+import { Redirect, Slot, Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { ActivityIndicator, Appearance, Platform, View } from "react-native";
+import {
+  ActivityIndicator,
+  Appearance,
+  Platform,
+  Text,
+  View,
+} from "react-native";
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
-// PortalHost will move to group layouts if it's used for in-app modals etc.
-// If it's a truly global portal for things that pop over everything, it *might* stay.
-// For now, let's assume it's for in-app elements and moves.
-// import { PortalHost } from "@rn-primitives/portal";
+import { PortalHost } from "@rn-primitives/portal";
+import { ThemeToggle } from "~/components/ThemeToggle";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
@@ -23,10 +27,9 @@ import { store } from "~/redux/store";
 import { Authenticator } from "@aws-amplify/ui-react-native";
 import { Amplify } from "aws-amplify";
 import outputs from "../../lexsee_v3_backend/amplify_outputs.json";
-
-// Import useAuthListener WITHOUT useSelector directly at this top level
-// It will return its own state
-import useAuthListener from "~/hooks/useAuthListener"; // Make sure path is correct
+import useAuthListener from "~/hooks/useAuthListener";
+import { useSelector } from "react-redux";
+import { RootState } from "~/redux/rootReducer";
 
 Amplify.configure(outputs);
 
@@ -39,7 +42,98 @@ const DARK_THEME: Theme = {
   colors: NAV_THEME.dark,
 };
 
-export { ErrorBoundary } from "expo-router";
+export {
+  // Catch any errors thrown by the Layout component.
+  ErrorBoundary,
+} from "expo-router";
+
+const usePlatformSpecificSetup = Platform.select({
+  web: useSetWebBackgroundClassName,
+  android: useSetAndroidNavigationBar,
+  default: noop,
+});
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
+
+SplashScreen.setOptions({
+  duration: 1000,
+  fade: true,
+});
+export default function RootLayout() {
+  const [appIsReady, setAppIsReady] = useState(false);
+  const { isDarkColorScheme } = useColorScheme();
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Pre-load fonts, make any API calls you need to do here
+        // Artificially delay for two seconds to simulate a slow loading experience
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        // Tell the application to render
+        setAppIsReady(true);
+        console.log("app ready");
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(() => {
+    if (appIsReady) {
+      //Splash Screen doesn't hide until screen renders
+
+      SplashScreen.hide();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
+  return (
+    <Authenticator.Provider>
+      <Provider store={store}>
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <View
+            className="flex-1 h-full w-full bg-background"
+            onLayout={onLayoutRootView}
+          >
+            <RootLayoutNav />
+            <PortalHost />
+          </View>
+        </ThemeProvider>
+      </Provider>
+    </Authenticator.Provider>
+  );
+}
+function RootLayoutNav() {
+  const router = useRouter();
+  usePlatformSpecificSetup();
+  const isLoading = !useAuthListener();
+
+  const user = useSelector((state: RootState) => state.user);
+  const isSignedIn = !!user.email;
+
+  // Route decision
+  useEffect(() => {
+    console.log("use Effect run");
+    if (!isLoading) {
+      if (!isSignedIn) {
+        console.log("router to sign in");
+        router.replace("/(auth)/signIn");
+      } else {
+        console.log("router to home");
+        router.replace("/(home)");
+      }
+    }
+  }, [isLoading, isSignedIn, router]);
+
+  return <>{isLoading ? null : <Slot />}</>;
+}
 
 const useIsomorphicLayoutEffect =
   Platform.OS === "web" && typeof window === "undefined"
@@ -48,9 +142,8 @@ const useIsomorphicLayoutEffect =
 
 function useSetWebBackgroundClassName() {
   useIsomorphicLayoutEffect(() => {
-    if (typeof document !== "undefined") {
-      document.documentElement.classList.add("bg-background");
-    }
+    // Adds the background color to the html element to prevent white background on overscroll.
+    document.documentElement.classList.add("bg-background");
   }, []);
 }
 
@@ -61,112 +154,3 @@ function useSetAndroidNavigationBar() {
 }
 
 function noop() {}
-
-const usePlatformSpecificSetup = Platform.select({
-  web: useSetWebBackgroundClassName,
-  android: useSetAndroidNavigationBar,
-  default: noop,
-});
-
-SplashScreen.preventAutoHideAsync();
-SplashScreen.setOptions({
-  duration: 1000,
-  fade: true,
-});
-
-// This is your main RootLayout component, exported as default from app/_layout.tsx
-export default function RootLayout() {
-  // --- Global Setup Hooks ---
-  usePlatformSpecificSetup();
-  const { isDarkColorScheme } = useColorScheme(); // This hook should be safe to call here if it uses Appearance API directly
-
-  // --- App Readiness State (for Splash Screen) ---
-  const [appIsReady, setAppIsReady] = useState(false);
-  useEffect(() => {
-    async function prepare() {
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate async loading
-      } catch (e) {
-        console.warn("App preparation error:", e);
-      } finally {
-        setAppIsReady(true);
-        console.log("App Ready (initial assets loaded)");
-      }
-    }
-    prepare();
-  }, []);
-
-  const onLayoutRootView = useCallback(() => {
-    if (appIsReady) {
-      SplashScreen.hideAsync();
-      console.log("Splash Screen hidden");
-    }
-  }, [appIsReady]);
-
-  // --- Authentication State (Directly from useAuthListener) ---
-  // Call useAuthListener *inside* the Provider chain, but its RETURNED values
-  // are what we'll use for the initial redirect.
-  // We'll wrap the *entire return* in the providers.
-
-  // --- Render Logic for Initial Loading & Redirect ---
-
-  // 1. Show Splash Screen (or null) while app assets are loading
-  if (!appIsReady) {
-    console.log("RootLayout: App not ready, returning null for splash screen.");
-    return null;
-  }
-
-  // 2. Render the top-level providers.
-  //    The useAuthListener hook will be called *within* this provider chain.
-  return (
-    <Authenticator.Provider>
-      <Provider store={store}>
-        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-          {/* Now, call useAuthListener and use its returned state */}
-          <AuthGate
-            onLayoutRootView={onLayoutRootView}
-            isDarkColorScheme={isDarkColorScheme}
-          />
-          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-        </ThemeProvider>
-      </Provider>
-    </Authenticator.Provider>
-  );
-}
-
-// This new component will live INSIDE the provider chain
-function AuthGate({
-  onLayoutRootView,
-  isDarkColorScheme,
-}: {
-  onLayoutRootView: () => void;
-  isDarkColorScheme: boolean;
-}) {
-  const { isAuthLoaded, isSignedIn } = useAuthListener(); // Now useDispatch works inside here
-
-  console.log("AuthGate: isAuthLoaded:", isAuthLoaded);
-  console.log("AuthGate: isSignedIn (from useAuthListener):", isSignedIn);
-
-  // 1. Show an ActivityIndicator while authentication state is being determined
-  if (!isAuthLoaded || isSignedIn === null) {
-    // isSignedIn === null means state is still unknown
-    console.log(
-      "AuthGate: Auth not yet loaded or unknown, showing ActivityIndicator."
-    );
-    return (
-      <View
-        className="flex-1 items-center justify-center bg-background"
-        onLayout={onLayoutRootView} // Attach onLayout here
-      >
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
-
-  // 2. Once everything is loaded (app assets AND auth state is determined), perform the redirect.
-  console.log(
-    "AuthGate: Auth loaded. Final redirect decision: isSignedIn is",
-    isSignedIn
-  );
-  return <Redirect href={isSignedIn ? "/(home)" : "/(auth)/signIn"} />;
-}

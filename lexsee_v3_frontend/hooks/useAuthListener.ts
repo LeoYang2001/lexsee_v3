@@ -1,140 +1,67 @@
-// hooks/useAuthListener.ts
-import { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { fetchUserAttributes, getCurrentUser } from "aws-amplify/auth"; // Import getCurrentUser
+import { fetchUserAttributes } from "aws-amplify/auth";
+import { clearUser, setUser, userLogIn } from "../redux/slices/userSlice";
 import { Hub } from "aws-amplify/utils";
-import { clearUser, setUser, userLogIn } from "../redux/slices/userSlice"; // Adjust path to your slice
 
-interface AuthState {
-  isAuthLoaded: boolean;
-  isSignedIn: boolean | null; // null indicates auth status is still unknown
-  userAttributes: Record<string, string> | null; // Store user attributes directly
-}
-
-export default function useAuthListener(): AuthState {
-  const dispatch = useDispatch(); // This will only work if the component calling useAuthListener is inside Redux Provider
-  const [authState, setAuthState] = useState<AuthState>({
-    isAuthLoaded: false,
-    isSignedIn: null,
-    userAttributes: null,
-  });
-
-  // Use a ref to track if Redux dispatch has been performed for the current user state
-  // This helps prevent redundant dispatches if the Hub listener fires multiple times for the same state
-  const lastDispatchedUserEmail = useRef<string | null | undefined>(undefined);
-
-  // Helper to update Redux (will be called only when safe to dispatch)
-  const dispatchUserToRedux = useCallback(
-    (attrs: Record<string, string> | null) => {
-      if (attrs && attrs.email) {
-        if (lastDispatchedUserEmail.current !== attrs.email) {
-          dispatch(userLogIn(attrs.email)); // Assuming userLogIn takes email
-          // Or if you want to set more attributes:
-          // dispatch(setUser({ email: attrs.email, ...attrs }));
-          console.log(
-            "useAuthListener: Redux dispatched - User Logged In:",
-            attrs.email
-          );
-          lastDispatchedUserEmail.current = attrs.email;
-        }
-      } else {
-        if (lastDispatchedUserEmail.current !== null) {
-          // Only dispatch if previously signed in
-          dispatch(clearUser());
-          console.log("useAuthListener: Redux dispatched - User Cleared.");
-          lastDispatchedUserEmail.current = null;
-        }
-      }
-    },
-    [dispatch]
-  );
+//Checks the user's login status
+//changes their email and login parameters on redux
+export default function useAuthListener() {
+  const dispatch = useDispatch();
+  const [isAuthLoaded, setIsAuthLoaded] = useState(false);
 
   useEffect(() => {
-    let isMounted = true; // Flag to prevent state updates on unmounted component
-
-    // Function to get current user status from Amplify Auth
-    // This will be called on initial load and after auth events
-    const checkCurrentUser = async () => {
+    //function to attempt to getUser
+    const getUser = async () => {
       try {
-        const user = await getCurrentUser(); // Gen 2 way to get current user
-        if (isMounted) {
-          // Only update state if component is still mounted
-          const attrs = await fetchUserAttributes(); // Fetch attributes if user exists
-          setAuthState({
-            isAuthLoaded: true,
-            isSignedIn: true,
-            userAttributes: attrs,
-          });
-          dispatchUserToRedux(attrs); // Dispatch to Redux
-        }
-      } catch (error) {
-        if (isMounted) {
-          console.log(
-            "useAuthListener: No current user or error fetching attributes:",
-            error
-          );
-          setAuthState({
-            isAuthLoaded: true,
-            isSignedIn: false,
-            userAttributes: null,
-          });
-          dispatchUserToRedux(null); // Dispatch to Redux
-        }
+        const attrs = await fetchUserAttributes();
+        dispatch(userLogIn(attrs.email || ""));
+      } catch {
+        dispatch(clearUser());
+      } finally {
+        setIsAuthLoaded(true);
       }
     };
 
-    // --- Initial Check on Mount ---
-    checkCurrentUser();
+    //Initial auth check
+    getUser();
 
-    // --- Hub Listener for Auth Events ---
     const listener = (data: any) => {
-      console.log("useAuthListener: Amplify Hub Event:", data.payload.event);
       switch (data.payload.event) {
         case "signedIn":
-          // When signed in, re-check current user to get fresh attributes
-          checkCurrentUser();
+          getUser();
+          console.log("user have been signedIn successfully.");
           break;
         case "signedOut":
-          // When signed out, explicitly set state and dispatch clear
-          if (isMounted) {
-            setAuthState({
-              isAuthLoaded: true,
-              isSignedIn: false,
-              userAttributes: null,
-            });
-            dispatchUserToRedux(null);
-          }
+          dispatch(clearUser());
+          setIsAuthLoaded(true);
+          console.log("user have been signedOut successfully.");
           break;
         case "tokenRefresh":
-          // Token refreshed, user is still signed in, re-check to get fresh info if needed
-          checkCurrentUser();
+          getUser();
+          console.log("auth tokens have been refreshed.");
           break;
         case "tokenRefresh_failure":
-          console.error(
-            "useAuthListener: Failure while refreshing auth tokens."
-          );
-          // Optionally, treat this as signed out if it implies session invalidity
-          // setAuthState({ isAuthLoaded: true, isSignedIn: false, userAttributes: null });
-          // dispatchUserToRedux(null);
+          console.log("failure while refreshing auth tokens.");
           break;
-        // For other events like signInWithRedirect, signInWithRedirect_failure, signOut_failure,
-        // you might want to call checkCurrentUser() or handle errors specifically.
-        // For signOut_failure, it means the sign out operation failed, user might still be logged in.
+        case "signInWithRedirect":
+          console.log("signInWithRedirect API has successfully been resolved.");
+          break;
+        case "signInWithRedirect_failure":
+          console.log(
+            "failure while trying to resolve signInWithRedirect API."
+          );
+          break;
         case "signOut_failure":
-          console.error("useAuthListener: Sign out unsuccessful.");
-          // User might still be signed in if signOut failed, so re-check current status
-          checkCurrentUser();
+          dispatch(clearUser());
+          setIsAuthLoaded(true);
+          console.log("signOut unsuccessful");
           break;
       }
     };
-
     const unsubscribe = Hub.listen("auth", listener);
+    return () => unsubscribe(); // cleanup on unmount
+  }, [dispatch]);
 
-    return () => {
-      isMounted = false; // Cleanup flag
-      unsubscribe(); // Unsubscribe from Hub listener
-    };
-  }, [dispatchUserToRedux]); // Include dispatchUserToRedux in dependencies since it's a memoized function
-
-  return authState;
+  return isAuthLoaded;
 }
