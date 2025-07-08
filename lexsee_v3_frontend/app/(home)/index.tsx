@@ -24,6 +24,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { signOut } from "~/utils/signOut";
+import { ThemeToggle } from "~/components/ThemeToggle";
 
 const GITHUB_AVATAR_URI =
   "https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg";
@@ -39,6 +40,9 @@ export default function Screen() {
       <TouchableOpacity onPress={signOut}>
         <Text>Sign Out</Text>
       </TouchableOpacity>
+      <View className="h-20 w-20 bg-gray-500 items-center justify-center">
+        <ThemeToggle></ThemeToggle>
+      </View>
       <Card className="w-full max-w-sm p-6 rounded-2xl">
         <CardHeader className="items-center">
           <Avatar alt="Rick Sanchez's Avatar" className="w-24 h-24">

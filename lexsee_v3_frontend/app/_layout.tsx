@@ -85,7 +85,6 @@ export default function RootLayout() {
   const onLayoutRootView = useCallback(() => {
     if (appIsReady) {
       //Splash Screen doesn't hide until screen renders
-
       SplashScreen.hide();
     }
   }, [appIsReady]);
@@ -113,26 +112,25 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const router = useRouter();
   usePlatformSpecificSetup();
-  const isLoading = !useAuthListener();
+  const isAuthLoaded = useAuthListener();
 
   const user = useSelector((state: RootState) => state.user);
   const isSignedIn = !!user.email;
 
   // Route decision
   useEffect(() => {
-    console.log("use Effect run");
-    if (!isLoading) {
+    if (isAuthLoaded) {
       if (!isSignedIn) {
-        console.log("router to sign in");
+        console.log("route to sign in");
         router.replace("/(auth)/signIn");
       } else {
-        console.log("router to home");
+        console.log("route to home");
         router.replace("/(home)");
       }
     }
-  }, [isLoading, isSignedIn, router]);
+  }, [isAuthLoaded, isSignedIn, router]);
 
-  return <>{isLoading ? null : <Slot />}</>;
+  return <>{isAuthLoaded ? <Slot /> : null}</>;
 }
 
 const useIsomorphicLayoutEffect =
