@@ -13,9 +13,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.lexsee-v3-frontend"
@@ -44,6 +42,10 @@
             "backgroundColor": "#000000"
           },
           "imageWidth": 200
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": true,
+          "supportsPictureInPicture": true
         }
       ]
     ],

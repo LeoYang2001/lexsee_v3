@@ -1,123 +1,95 @@
-import * as React from "react";
-import { TouchableOpacity, View } from "react-native";
-import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  LayoutAnimationConfig,
-} from "react-native-reanimated";
-import { Info } from "~/lib/icons/Info";
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
-import { Button } from "~/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import { Progress } from "~/components/ui/progress";
-import { Text } from "~/components/ui/text";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
-import { signOut } from "~/utils/signOut";
-import { ThemeToggle } from "~/components/ThemeToggle";
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import React from "react";
+import { Link } from "expo-router";
+import Logo from "~/components/common/Logo";
+import Colors from "~/constants"; // Adjust the import path as necessary
+import { ChevronDown, Triangle } from "lucide-react-native";
+import { DrawerActions, useNavigation } from "@react-navigation/native"; // Add this import
+import InputBox from "~/components/home/InputBox";
+import Dashboard from "~/components/home/Dashboard";
+import { mockWordList } from "~/data/wordslist_mock";
+import FlexCard from "~/components/common/FlexCard";
 
-const GITHUB_AVATAR_URI =
-  "https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg";
+const Screen = () => {
+  const navigation = useNavigation(); // Add this line
 
-export default function Screen() {
-  const [progress, setProgress] = React.useState(78);
+  const openDrawer = () => {
+    navigation.dispatch(DrawerActions.openDrawer()); // Add this function
+  };
 
-  function updateProgressValue() {
-    setProgress(Math.floor(Math.random() * 100));
-  }
   return (
-    <View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
-      <TouchableOpacity onPress={signOut}>
-        <Text>Sign Out</Text>
-      </TouchableOpacity>
-      <View className="h-20 w-20 bg-gray-500 items-center justify-center">
-        <ThemeToggle></ThemeToggle>
-      </View>
-      <Card className="w-full max-w-sm p-6 rounded-2xl">
-        <CardHeader className="items-center">
-          <Avatar alt="Rick Sanchez's Avatar" className="w-24 h-24">
-            <AvatarImage source={{ uri: GITHUB_AVATAR_URI }} />
-            <AvatarFallback>
-              <Text>RS</Text>
-            </AvatarFallback>
-          </Avatar>
-          <View className="p-3" />
-          <CardTitle className="pb-2 text-center">Rick Sanchez</CardTitle>
-          <View className="flex-row">
-            <CardDescription className="text-base font-semibold">
-              Scientist
-            </CardDescription>
-            <Tooltip delayDuration={150}>
-              <TooltipTrigger className="px-2 pb-0.5 active:opacity-50">
-                <Info
-                  size={14}
-                  strokeWidth={2.5}
-                  className="w-4 h-4 text-foreground/70"
-                />
-              </TooltipTrigger>
-              <TooltipContent className="py-2 px-4 shadow">
-                <Text className="native:text-lg">Freelance</Text>
-              </TooltipContent>
-            </Tooltip>
-          </View>
-        </CardHeader>
-        <CardContent>
-          <View className="flex-row justify-around gap-3">
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Dimension</Text>
-              <Text className="text-xl font-semibold">C-137</Text>
+    <SafeAreaView
+      style={{
+        backgroundColor: Colors.homeBackground,
+      }}
+      className="container-column  "
+    >
+      <View
+        style={{
+          paddingHorizontal: 18,
+        }}
+        className="flex-1  flex flex-col justify-start "
+      >
+        <View className=" w-full flex flex-row justify-between items-center">
+          <Logo />
+          <View className=" flex flex-row gap-4 ">
+            <View className=" flex flex-row items-center gap-1">
+              <Text style={{ color: "#fff", opacity: 0.7 }}>English</Text>
+              <ChevronDown size={18} color={"#fff"} opacity={0.7} />
             </View>
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Age</Text>
-              <Text className="text-xl font-semibold">70</Text>
-            </View>
-            <View className="items-center">
-              <Text className="text-sm text-muted-foreground">Species</Text>
-              <Text className="text-xl font-semibold">Human</Text>
-            </View>
+            <TouchableOpacity onPress={openDrawer} className="  p-1">
+              <Image
+                style={{
+                  width: 22,
+                  height: 22,
+                }}
+                source={require("~/assets/images/menuIcon.png")}
+              />
+            </TouchableOpacity>
           </View>
-        </CardContent>
-        <CardFooter className="flex-col gap-3 pb-0">
-          <View className="flex-row items-center overflow-hidden">
-            <Text className="text-sm text-muted-foreground">Productivity:</Text>
-            <LayoutAnimationConfig skipEntering>
-              <Animated.View
-                key={progress}
-                entering={FadeInUp}
-                exiting={FadeOutDown}
-                className="w-11 items-center"
-              >
-                <Text className="text-sm font-bold text-sky-600">
-                  {progress}%
-                </Text>
-              </Animated.View>
-            </LayoutAnimationConfig>
-          </View>
-          <Progress
-            value={progress}
-            className="h-2"
-            indicatorClassName="bg-sky-600"
-          />
-          <View />
-          <Button
-            variant="outline"
-            className="shadow shadow-foreground/5"
-            onPress={updateProgressValue}
+        </View>
+        <View className="mt-7">
+          <InputBox />
+        </View>
+        <View className="mt-7">
+          <Dashboard />
+        </View>
+        <View className="mt-7">
+          <Text
+            style={{
+              fontSize: 12,
+            }}
+            className="text-white opacity-70"
           >
-            <Text>Update</Text>
-          </Button>
-        </CardFooter>
-      </Card>
-    </View>
+            Recently Pinned
+          </Text>
+        </View>
+        <ScrollView className="mt-4 flex-1 ">
+          <View className="flex-col flex-wrap gap-2">
+            {mockWordList.map((word) => (
+              <FlexCard
+                key={word.id}
+                word={word}
+                ifDetail={false}
+                ifGraphic={false}
+              />
+            ))}
+          </View>
+        </ScrollView>
+        <Link href="/(about)" className="text-blue-500 mt-4">
+          Go to About
+        </Link>
+      </View>
+    </SafeAreaView>
   );
-}
+};
+
+export default Screen;
+

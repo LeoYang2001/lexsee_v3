@@ -107,6 +107,7 @@ export default function RootLayout() {
         </ThemeProvider>
       </Provider>
     </Authenticator.Provider>
+
   );
 }
 function RootLayoutNav() {
@@ -138,6 +139,7 @@ const useIsomorphicLayoutEffect =
     ? useEffect
     : useLayoutEffect;
 
+
 function useSetWebBackgroundClassName() {
   useIsomorphicLayoutEffect(() => {
     // Adds the background color to the html element to prevent white background on overscroll.
@@ -147,6 +149,7 @@ function useSetWebBackgroundClassName() {
 
 function useSetAndroidNavigationBar() {
   useLayoutEffect(() => {
+
     setAndroidNavigationBar(Appearance.getColorScheme() ?? "light");
   }, []);
 }
